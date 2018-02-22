@@ -1,6 +1,6 @@
 CloudCoin Demo Online Store
 
-* Install *
+* Install 
 
 <pre>
 php composer.phar install
