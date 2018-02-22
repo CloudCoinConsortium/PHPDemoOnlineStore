@@ -1,0 +1,6 @@
+coins/^.*
+*.swp
+orders/*
+cloudbank.log
+vendor/
+composer.lock
