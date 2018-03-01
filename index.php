@@ -57,7 +57,8 @@ if (isset($_FILES['coins'])) {
 							for ($i = 0; $i < count($order); $i++) {
 								$links[] = [
 									"https://eshop.cloudcoin.digital/getitem.php?id=" . $order[$i]->item . "&rn=" . $receipt, 
-									$order[$i]->name
+									$order[$i]->name,
+									$orderId
 								];
 			
 								$oItems[] = $order[$i]->item;
@@ -165,7 +166,7 @@ if (isset($_FILES['coins'])) {
 				</span>
 				<span class="left more-links">
 					<a href="javascript:void(0)" id="checkout">Checkout</a>
-					<a href="javascript:void(0)" id="details">Details</a>
+					<a href="javascript:void(0)" id="details">Shopping Cart</a>
 				</span>
 			</div>
 		</div>
@@ -194,7 +195,7 @@ if (isset($_FILES['coins'])) {
 							    		Book: Beyond Bitcon<br>
 									Author: Sean Wothington
 							    	</p>
-							    	<p class="price">Price: <strong>250 CC</strong></p><div class="button"><button id="i0">ADD TO CART</button></div>
+							    	<p class="price">Price: <strong>1 CC</strong></p><div class="button"><button id="i0">ADD TO CART</button></div>
 							    </li>
 							    <li>
 							    	<div class="image">
@@ -205,7 +206,7 @@ if (isset($_FILES['coins'])) {
 							    		Book: Beyond Bitcon<br>
 									Author: Sean Wothington
 							    	</p>
-							    	<p class="price">Price: <strong>250 CC</strong></p>
+							    	<p class="price">Price: <strong>5 CC</strong></p>
 <div class="button"><button id="i1">ADD TO CART</button></div>
 							    </li>
 							    <li>
@@ -217,7 +218,7 @@ if (isset($_FILES['coins'])) {
 							    		Book: Beyond Bitcon<br>
 									Author: Sean Wothington
 							    	</p>
-							    	<p class="price">Price: <strong>250 CC</strong></p>
+							    	<p class="price">Price: <strong>25 CC</strong></p>
 <div class="button"><button id="i2">ADD TO CART</button></div>
 							    </li>
 							    <li>
@@ -229,7 +230,7 @@ if (isset($_FILES['coins'])) {
 							    		Book: Beyond Bitcon<br>
 									Author: Sean Wothington
 							    	</p>
-							    	<p class="price">Price: <strong>500 CC</strong></p>
+							    	<p class="price">Price: <strong>250 CC</strong></p>
 <div class="button"><button id="i3">ADD TO CART</button></div>
 							    </li>
 							</ul>
@@ -273,7 +274,7 @@ if (isset($_FILES['coins'])) {
 
 <div class="ui modal cmodal" id="cart">
         <i class="close icon cicon"></i>
-        <div class="header">Shopping Cart</div>
+        <div class="header" id="sctitle">Shopping Cart</div>
 	<div class="content" id="shopdata"></div>
 	<div class="button"><button id="proceed">PROCEED</button></div>
 	<div>&nbsp;</div>
@@ -290,7 +291,10 @@ if (isset($_FILES['coins'])) {
 <?php
 	}
 ?>
+	<br>&nbsp;<br>
 
+	Here is your receipt: <a href="https://eshop.cloudcoin.digital/receipt.php?orderid=<?php echo $links[0][2]?>" target="_blank">download</a>
+	<br>&nbsp;<br>
 
 	</div>
 	<div>&nbsp;</div>
@@ -299,10 +303,10 @@ if (isset($_FILES['coins'])) {
 <script type="text/javascript">
 $(document).ready(function() {
 	var ops = {
-		'0' : {'item': 225, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 250 },
-		'1' : {'item': 226, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 250 },
-		'2' : {'item': 227, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 250 },
-		'3' : {'item': 228, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 500 },
+		'0' : {'item': 225, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 1 },
+		'1' : {'item': 226, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 5 },
+		'2' : {'item': 227, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 25 },
+		'3' : {'item': 228, 'title': 'Beyond Bitcoin by Sean Wothington', 'price': 250 },
 	}
 	var cart = []
 
@@ -366,6 +370,7 @@ $(document).ready(function() {
 	$('#details').click(function() {
 		updateCart()
 
+		$('#sctitle').html('Shopping Cart')
 		$('#proceed').show()
 		$('.ui.modal#cart').modal('show')
 	})
@@ -395,6 +400,7 @@ $(document).ready(function() {
 	$('#checkout').click(function() {
 		updateCart()
 
+		$('#sctitle').html('Checkout')
 		$('.ui.modal#cart').modal('show')
 		$('#proceed').click()
 	})	
